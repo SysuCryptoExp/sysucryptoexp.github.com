@@ -1,0 +1,141 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">简易OAEP编码/解码（PPT的做法）</h6>
+    <form>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputDataForSimpleEncoding" class="col-form-label">输入待编码数据：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="inputDataForSimpleEncodingUtf8">
+                <option value="1" selected>Unicode字符</option>
+                <option value="0">十六进制</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputDataForSimpleEncoding" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputRForEncoding" class="col-form-label">输入r：</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputRForEncoding" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="rHelpInline" class="form-text">
+                可选，十六进制，长度为1024bit，留空的话程序会随机选择R
+            </span>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" onclick="getSimpleOAEPEncode()">提交</button>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultSimpleOAEPEncode" class="col-auto col-form-label">输出结果：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultSimpleOAEPEncode" value="" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="border-bottom border-black mt-2 mb-2 "></div>
+    <div class="row align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputEncodedDataForSimpleEncoding" class="col-form-label">输入待解码的数据（十六进制）：</label>
+        </div>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" class="form-control-plaintext border" id="inputEncodedDataForSimpleEncoding" value="" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" onclick="getSimpleOAEPDecode()">提交</button>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultSimpleOAEPDecode" class="col-auto col-form-label">输出结果：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultSimpleOAEPDecode" value="" rows="4"></textarea>
+        </div>
+    </div>
+    </form>
+</div>
+
+<script>
+
+    function getSimpleOAEPEncode() {
+        let inputDataValue = document.querySelector("#inputDataForSimpleEncoding").value;
+        let inputDataValueDec = document.querySelector("#inputDataForSimpleEncodingUtf8").value;
+        let inputRValue = document.querySelector("#inputRForEncoding").value;
+    
+        if (inputDataValue !== '') {
+            let params = {
+                message: inputDataValue,
+                is_message_utf8: inputDataValueDec
+            };
+
+            if (inputRValue !== '') {
+                params["r"] = inputRValue
+            }
+    
+            document.querySelector("#resultSimpleOAEPEncode").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "http://43.134.106.184/crypto/simple_oaep_encode?";
+            fetch(url + new URLSearchParams(params)).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            document.querySelector("#resultSimpleOAEPEncode").value = `${outputValue["encoded_message"]}`;
+                        } else {
+                            document.querySelector("#resultSimpleOAEPEncode").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultSimpleOAEPEncode").value = reason;
+                    })
+                }
+            });
+        }
+    }
+
+    function getSimpleOAEPDecode() {
+        let inputDataValue = document.querySelector("#inputEncodedDataForSimpleEncoding").value.trim();
+    
+        if (inputDataValue !== '') {
+            let params = {
+                encoded_message: inputDataValue
+            };
+
+            document.querySelector("#resultSimpleOAEPDecode").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "http://43.134.106.184/crypto/simple_oaep_decode?";
+            fetch(url + new URLSearchParams(params)).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            result_str = `十六进制表示: ${outputValue["message_bytes"]}`;
+                            if (outputValue["message_utf8"]) {
+                                result_str += `\nUTF8解码后的结果：${outputValue["message_utf8"]}`
+                            }
+                            document.querySelector("#resultSimpleOAEPDecode").value = result_str;
+                        } else {
+                            document.querySelector("#resultSimpleOAEPDecode").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultSimpleOAEPDecode").value = reason;
+                    })
+                }
+            });
+        }
+    }
+</script>

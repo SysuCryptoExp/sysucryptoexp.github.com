@@ -1,0 +1,251 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">EME-OAEP编码/解码（RFC8071的做法）</h6>
+    <form>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputDataForEmeOAEPEncoding" class="col-form-label">输入待编码数据：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="inputDataForEmeOAEPEncodingUtf8">
+                <option value="1" selected>Unicode字符</option>
+                <option value="0">十六进制</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputDataForEmeOAEPEncoding" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputLabelForEmeOAEPEncoding" class="col-form-label">输入label：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="inputLabelForEmeOAEPEncodingUtf8">
+                <option value="1" selected>Unicode字符</option>
+                <option value="0">十六进制</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputLabelForEmeOAEPEncoding" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="labelHelpInline" class="form-text">
+                可留空
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="hashFuncForOAEPEncoding" class="col-form-label">OAEP所用的哈希函数：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="hashFuncForOAEPEncoding">
+                <option value="sha256" selected>SHA-256</option>
+                <option value="sha1">SHA-1</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <span id="oaepHashHelpInline" class="form-text">
+                对label所采取的哈希函数，默认选SHA-256
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="hashFuncForMgfEncoding" class="col-form-label">MGF所用的哈希函数：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="hashFuncForMgfEncoding">
+                <option value="sha256" selected>SHA-256</option>
+                <option value="sha1">SHA-1</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <span id="mgfHashHelpInline" class="form-text">
+            MGF底层采用的哈希函数，默认选SHA-256
+            </span>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" onclick="getEmeOAEPEncode()">提交</button>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultEmeOAEPEncode" class="col-auto col-form-label">输出结果：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultEmeOAEPEncode" value="" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="border-bottom border-black mt-2 mb-2 "></div>
+    <div class="row align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputEncodedDataForEmeOAEPEncoding" class="col-form-label">输入待解码的数据（十六进制）：</label>
+        </div>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" class="form-control-plaintext border" id="inputEncodedDataForEmeOAEPEncoding" value="" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputLabelForEmeOAEPDecoding" class="col-form-label">输入label：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="inputLabelForEmeOAEPDecodingUtf8">
+                <option value="1" selected>Unicode字符</option>
+                <option value="0">十六进制</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputLabelForEmeOAEPDecoding" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="labelHelpInline2" class="form-text">
+                可留空
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="hashFuncForOAEPDecoding" class="col-form-label">OAEP所用的哈希函数：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="hashFuncForOAEPDecoding">
+                <option value="sha256" selected>SHA-256</option>
+                <option value="sha1">SHA-1</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <span id="oaepHashHelpInline2" class="form-text">
+                对label所采取的哈希函数，默认选SHA-256
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="hashFuncForMgfDecoding" class="col-form-label">MGF所用的哈希函数：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="hashFuncForMgfDecoding">
+                <option value="sha256" selected>SHA-256</option>
+                <option value="sha1">SHA-1</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <span id="mgfHashHelpInline2" class="form-text">
+            MGF底层采用的哈希函数，默认选SHA-256
+            </span>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" onclick="getEmeOAEPDecode()">提交</button>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultEmeOAEPDecode" class="col-auto col-form-label">输出结果：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultEmeOAEPDecode" value="" rows="4"></textarea>
+        </div>
+    </div>
+    </form>
+</div>
+
+<script>
+
+    function getEmeOAEPEncode() {
+        let inputDataValue = document.querySelector("#inputDataForEmeOAEPEncoding").value;
+        let inputDataValueDec = document.querySelector("#inputDataForEmeOAEPEncodingUtf8").value;
+
+        let inputLabelValue = document.querySelector("#inputLabelForEmeOAEPEncoding").value;
+        let inputLabelUtf8 = document.querySelector("#inputLabelForEmeOAEPEncodingUtf8").value;
+
+        let hash = document.querySelector("#hashFuncForOAEPEncoding").value;
+        let mgf1Hash = document.querySelector("#hashFuncForMgfEncoding").value;
+    
+        if (inputDataValue !== '') {
+            let params = {
+                message: inputDataValue,
+                is_message_utf8: inputDataValueDec,
+                hash: hash,
+                mgf1_hash: mgf1Hash
+            };
+
+            if (inputLabelValue !== '') {
+                params["label"] = inputLabelValue;
+                params["is_label_utf8"] = inputLabelUtf8;
+            }
+    
+            document.querySelector("#resultEmeOAEPEncode").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "http://43.134.106.184/crypto/eme_oaep_encode?";
+            fetch(url + new URLSearchParams(params)).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            document.querySelector("#resultEmeOAEPEncode").value = `${outputValue["encoded_message"]}`;
+                        } else {
+                            document.querySelector("#resultEmeOAEPEncode").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultEmeOAEPEncode").value = reason;
+                    })
+                }
+            });
+        }
+    }
+
+    function getEmeOAEPDecode() {
+        let inputDataValue = document.querySelector("#inputEncodedDataForEmeOAEPEncoding").value.trim();
+
+        let inputLabelValue = document.querySelector("#inputLabelForEmeOAEPDecoding").value;
+        let inputLabelUtf8 = document.querySelector("#inputLabelForEmeOAEPDecodingUtf8").value;
+
+        let hash = document.querySelector("#hashFuncForOAEPDecoding").value;
+        let mgf1Hash = document.querySelector("#hashFuncForMgfDecoding").value;
+    
+        if (inputDataValue !== '') {
+            let params = {
+                encoded_message: inputDataValue,
+                hash: hash,
+                mgf1_hash: mgf1Hash
+            };
+
+            if (inputLabelValue !== '') {
+                params["label"] = inputLabelValue;
+                params["is_label_utf8"] = inputLabelUtf8;
+            }
+
+            document.querySelector("#resultEmeOAEPDecode").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "http://43.134.106.184/crypto/eme_oaep_decode?";
+            fetch(url + new URLSearchParams(params)).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            result_str = `十六进制表示: ${outputValue["message_bytes"]}`;
+                            if (outputValue["message_utf8"]) {
+                                result_str += `\nUTF8解码后的结果：${outputValue["message_utf8"]}`
+                            }
+                            document.querySelector("#resultEmeOAEPDecode").value = result_str;
+                        } else {
+                            document.querySelector("#resultEmeOAEPDecode").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultEmeOAEPDecode").value = reason;
+                    })
+                }
+            });
+        }
+    }
+</script>

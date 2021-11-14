@@ -1,0 +1,49 @@
+<script src="{{ "/js/rsa_pq.js" | prepend: site.baseurl}}"></script>
+
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">根据学号末位选择p,q</h6>
+    <div class="col-lg-2">
+        <select class="form-select mt-2" onchange="selectOnchang(this)">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+        </select>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultPQDec" class="col-auto col-form-label">输出结果(十进制)：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultPQDec" value="" rows="10"></textarea>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultPQHex" class="col-auto col-form-label">输出结果(十六进制)：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultPQHex" value="" rows="10"></textarea>
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectOnchang(obj){  
+        //获取被选中的option标签选项 
+        index = obj.selectedIndex;
+        pqn = p_q_n_phi_n_set[index];
+        textDec = `十进制表示法:\np: ${pqn.p}\nq: ${pqn.q}\nn: ${pqn.n}\nphi_n: ${pqn.phi_n}`;
+        document.querySelector("#resultPQDec").value = textDec;
+
+        textHex = `十六进制表示法:\np: ${pqn.p_hex}\nq: ${pqn.q_hex}\nn: ${pqn.n_hex}\nphi_n: ${pqn.phi_n_hex}`;
+        document.querySelector("#resultPQHex").value = textHex;
+    }
+    selectOnchang({selectedIndex:0});
+</script>

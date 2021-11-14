@@ -1,0 +1,63 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">下一个素数</h6>
+    <form>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputNextPrime" class="col-form-label">输入数字：</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputNextPrime" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="passwordHelpInline" class="form-text">
+            请使用十进制表示法.
+            </span>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" onclick="getNextPrime()">提交</button>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultNextPrime" class="col-auto col-form-label">输出结果：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultNextPrime" value="" rows="4"></textarea>
+        </div>
+    </div>
+    </form>
+</div>
+
+<script>
+function isInDesiredForm(str) {
+    return /^\+?\d+$/.test(str);
+}
+
+function getNextPrime() {
+    let inputValue = document.querySelector("#inputNextPrime").value;
+    if (inputValue !== '') {
+        if (!isInDesiredForm(inputValue)) {
+            document.querySelector("#resultNextPrime").value = "输入数字非整数";
+            return;
+        }
+        document.querySelector("#resultNextPrime").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+        url = "http://43.134.106.184/crypto/next_prime?num=" + inputValue;
+        fetch(url).then(rsp => {
+            if (rsp.status === 200) {
+                rsp.json().then(outputValue => {
+                    console.log(outputValue);
+                    if (outputValue["success"] === true) {
+                        document.querySelector("#resultNextPrime").value = `十进制: ${outputValue["result_dec"]}\n十六进制: ${outputValue["result_hex"]}`;
+                    } else {
+                        document.querySelector("#resultNextPrime").value = outputValue["reason"];
+                    }
+                });
+            } else {
+                rsp.text().then(reason => {
+                    document.querySelector("#resultNextPrime").value = reason;
+                })
+            }
+        });
+    }
+}
+</script>

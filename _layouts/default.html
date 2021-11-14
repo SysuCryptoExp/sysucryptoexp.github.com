@@ -1,6 +1,26 @@
----
-theme :
-  name : bootstrap-3
----
-{% include JB/setup %}
-{% include themes/bootstrap-3/default.html %}
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en-US' }}">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  {% seo %}
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+</head>
+<body>
+{% include navbar.html %}
+<div class="container">
+  <main role="main" class="container">
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+      <img class="mr-3" src="{{ '/img/lock2.png' | relative_url }}" alt="" width="40" height="48">
+      <div class="lh-100">
+        <h4 class="mb-0 text-white lh-100">{{ page.title }}</h4>
+      </div>
+    </div>
+
+    {{ content | markdownify }}
+  </main>
+</div>
+{% include footer.html %}
+</body>
+</html>

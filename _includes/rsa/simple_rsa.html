@@ -1,0 +1,206 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">基于简易OAEP填充的RSA加密/解密</h6>
+    <form>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputDataForSimpleRSAEnc" class="col-form-label">输入待加密数据：</label>
+        </div>
+        <div class="col-auto">
+            <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example" id="inputDataForSimpleRSAEncUtf8">
+                <option value="1" selected>Unicode字符</option>
+                <option value="0">十六进制</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputDataForSimpleRSAEnc" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="dataHelpInlineRSA" class="form-text">
+                不用事先进行OAEP填充，程序会自己进行简易的OAEP填充
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputRForSimpleRSA" class="col-form-label">输入r：</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputRForSimpleRSA" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="rHelpInlineRSA" class="form-text">
+                可选，用于OAEP编码，十六进制，长度为1024bit，留空的话程序会随机选择R
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputNForSimpleRSAEnc" class="col-form-label">输入n：</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputNForSimpleRSAEnc" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="nHelpInlineRSA" class="form-text">
+                必填，十六进制
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputEForSimpleRSA" class="col-form-label">输入e：</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputEForSimpleRSA" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="eHelpInlineRSA" class="form-text">
+                必填，十六进制
+            </span>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" onclick="getSimpleRSAEnc()">提交</button>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultSimpleRSAEnc" class="col-auto col-form-label">输出结果：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultSimpleRSAEnc" value="" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="border-bottom border-black mt-2 mb-2 "></div>
+    <div class="row align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputCipherForSimpleRSA" class="col-form-label">输入待解密的数据（十六进制）：</label>
+        </div>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" class="form-control-plaintext border" id="inputCipherForSimpleRSA" value="" rows="4"></textarea>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputNForSimpleRSADec" class="col-form-label">输入n：</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputNForSimpleRSADec" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="nHelpInlineRSA2" class="form-text">
+                必填，十六进制
+            </span>
+        </div>
+    </div>
+    <div class="row g-3 align-items-center mt-2">
+        <div class="col-auto">
+            <label for="inputDForSimpleRSA" class="col-form-label">输入d：</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputDForSimpleRSA" class="form-control" aria-describedby="passwordHelpInline">
+        </div>
+        <div class="col-auto">
+            <span id="dHelpInlineRSA" class="form-text">
+                必填，十六进制
+            </span>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary" onclick="getSimpleRSADec()">提交</button>
+        </div>
+    </div>
+    <div class="mt-2 row g-3">
+        <label for="resultSimpleRSADec" class="col-auto col-form-label">输出结果：</label>
+    </div>
+    <div class="mt-2 row">
+        <div class="col-12">
+            <textarea type="text" readonly class="form-control-plaintext" id="resultSimpleRSADec" value="" rows="4"></textarea>
+        </div>
+    </div>
+    </form>
+</div>
+
+<script>
+
+    function getSimpleRSAEnc() {
+        let inputDataValue = document.querySelector("#inputDataForSimpleRSAEnc").value;
+        let inputDataValueDec = document.querySelector("#inputDataForSimpleRSAEncUtf8").value;
+        let inputRValue = document.querySelector("#inputRForSimpleRSA").value;
+        let inputNValue = document.querySelector("#inputNForSimpleRSAEnc").value;
+        let inputEValue = document.querySelector("#inputEForSimpleRSA").value;
+    
+        if (inputDataValue !== '') {
+            let params = {
+                message: inputDataValue,
+                is_message_utf8: inputDataValueDec,
+                n: inputNValue,
+                e: inputEValue
+            };
+
+            if (inputRValue !== '') {
+                params["r"] = inputRValue
+            }
+    
+            document.querySelector("#resultSimpleRSAEnc").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "http://43.134.106.184/crypto/rsa2048_simple_oaep/enc?";
+            fetch(url + new URLSearchParams(params)).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            document.querySelector("#resultSimpleRSAEnc").value = `${outputValue["cipher_bytes"]}`;
+                        } else {
+                            document.querySelector("#resultSimpleRSAEnc").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultSimpleRSAEnc").value = reason;
+                    })
+                }
+            });
+        }
+    }
+
+    function getSimpleRSADec() {
+        let inputDataValue = document.querySelector("#inputCipherForSimpleRSA").value;
+        let inputNValue = document.querySelector("#inputNForSimpleRSADec").value;
+        let inputDValue = document.querySelector("#inputDForSimpleRSA").value;
+    
+        if (inputDataValue !== '') {
+            let params = {
+                cipher: inputDataValue,
+                n: inputNValue,
+                d: inputDValue
+            };
+
+            document.querySelector("#resultSimpleRSADec").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "http://43.134.106.184/crypto/rsa2048_simple_oaep/dec?";
+            fetch(url + new URLSearchParams(params)).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            result_str = `十六进制表示: ${outputValue["message_bytes"]}`;
+                            if (outputValue["message_utf8"]) {
+                                result_str += `\nUTF8解码后的结果：${outputValue["message_utf8"]}`
+                            }
+                            document.querySelector("#resultSimpleRSADec").value = result_str;
+                        } else {
+                            document.querySelector("#resultSimpleRSADec").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultSimpleRSADec").value = reason;
+                    })
+                }
+            });
+        }
+    }
+</script>
