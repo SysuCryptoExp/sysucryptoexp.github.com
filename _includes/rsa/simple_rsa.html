@@ -147,7 +147,7 @@
             }
     
             document.querySelector("#resultSimpleRSAEnc").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
-            url = "http://43.134.106.184/crypto/rsa2048_simple_oaep/enc?";
+            url = "https://api.jeza-chen.com/crypto/rsa2048_simple_oaep/enc?";
             fetch(url + new URLSearchParams(params)).then(rsp => {
                 if (rsp.status === 200) {
                     rsp.json().then(outputValue => {
@@ -180,7 +180,7 @@
             };
 
             document.querySelector("#resultSimpleRSADec").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
-            url = "http://43.134.106.184/crypto/rsa2048_simple_oaep/dec?";
+            url = "https://api.jeza-chen.com/crypto/rsa2048_simple_oaep/dec?";
             fetch(url + new URLSearchParams(params)).then(rsp => {
                 if (rsp.status === 200) {
                     rsp.json().then(outputValue => {

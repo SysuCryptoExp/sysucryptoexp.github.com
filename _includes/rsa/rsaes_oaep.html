@@ -244,7 +244,7 @@
             }
     
             document.querySelector("#resultRSAESEnc").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
-            url = "http://43.134.106.184/crypto/rsaes_2048_oaep/enc?";
+            url = "https://api.jeza-chen.com/crypto/rsaes_2048_oaep/enc?";
             fetch(url + new URLSearchParams(params)).then(rsp => {
                 if (rsp.status === 200) {
                     rsp.json().then(outputValue => {
@@ -291,7 +291,7 @@
                 params["is_label_utf8"] = inputLabelUtf8;
             }
 
-            url = "http://43.134.106.184/crypto/rsaes_2048_oaep/dec?";
+            url = "https://api.jeza-chen.com/crypto/rsaes_2048_oaep/dec?";
             document.querySelector("#resultRSAESDec").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
             fetch(url + new URLSearchParams(params)).then(rsp => {
                 if (rsp.status === 200) {

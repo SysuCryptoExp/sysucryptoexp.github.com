@@ -183,7 +183,7 @@
             }
     
             document.querySelector("#resultEmeOAEPEncode").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
-            url = "http://43.134.106.184/crypto/eme_oaep_encode?";
+            url = "https://api.jeza-chen.com/crypto/eme_oaep_encode?";
             fetch(url + new URLSearchParams(params)).then(rsp => {
                 if (rsp.status === 200) {
                     rsp.json().then(outputValue => {
@@ -225,7 +225,7 @@
             }
 
             document.querySelector("#resultEmeOAEPDecode").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
-            url = "http://43.134.106.184/crypto/eme_oaep_decode?";
+            url = "https://api.jeza-chen.com/crypto/eme_oaep_decode?";
             fetch(url + new URLSearchParams(params)).then(rsp => {
                 if (rsp.status === 200) {
                     rsp.json().then(outputValue => {
