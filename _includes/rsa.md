@@ -7,8 +7,8 @@
 {% include rsa/next_prime.html %}
 
 ### 3. 根据RSA私钥d求出公钥e
+求解d关于模phi_n的逆元e即可。
 
-求解d关于模n的逆元e即可。
 
 {% include rsa/cal_inverse.html %}
 
