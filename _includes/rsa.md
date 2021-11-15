@@ -2,13 +2,13 @@
 
 {% include rsa/pq_select.html %}
 
-### 2. 根据学号输出下一个素数作为RSA私钥e
+### 2. 根据学号输出下一个素数作为RSA私钥d
 
 {% include rsa/next_prime.html %}
 
-### 3. 根据RSA私钥求出公钥
+### 3. 根据RSA私钥d求出公钥e
 
-求解e关于模n的逆元d即可。
+求解d关于模n的逆元e即可。
 
 {% include rsa/cal_inverse.html %}
 
