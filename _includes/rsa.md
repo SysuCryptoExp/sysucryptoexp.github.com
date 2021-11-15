@@ -8,7 +8,7 @@
 
 ### 3. 根据RSA私钥求出公钥
 
-求解e关于模n的逆元d即可。
+求解e关于模phi_n的逆元d即可。
 
 {% include rsa/cal_inverse.html %}
 
