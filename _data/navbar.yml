@@ -2,5 +2,7 @@
   link: /
 - name: RSA
   link: /rsa
+- name: DLP
+  link: /dlp
 - name: 关于
   link: /about
