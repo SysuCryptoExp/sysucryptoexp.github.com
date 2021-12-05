@@ -49,19 +49,22 @@
             }).then(rsp => {
                 if (rsp.status === 200) {
                     rsp.json().then(outputValue => {
-                        console.log(outputValue);
-                        if (outputValue["new_task"] === true) {
-                            document.querySelector("#taskResult").value = `发布任务成功, 任务id: ${outputValue["task_id"]}`;
-                        } else {
-                            if (outputValue["finished"] === false) {
-                                document.querySelector("#taskResult").value = `任务已经提交, 任务id: ${outputValue["task_id"]}, 正在排队计算中...`;
+                        if (outputValue["success"] === true) {
+                            if (outputValue["new_task"] === true) {
+                                document.querySelector("#taskResult").value = `发布任务成功, 任务id: ${outputValue["task_id"]}`;
                             } else {
-                                if (outputValue["task_success"] === false) {
-                                    document.querySelector("#taskResult").value = `任务(id: ${outputValue["task_id"]})计算失败! \n理由: ${outputValue["result"]}`;
+                                if (outputValue["finished"] === false) {
+                                    document.querySelector("#taskResult").value = `任务已经提交, 任务id: ${outputValue["task_id"]}, 正在排队计算中...`;
                                 } else {
-                                    document.querySelector("#taskResult").value = `任务(id: ${outputValue["task_id"]})计算成功! \n离散对数结果: ${outputValue["result"]}`;
+                                    if (outputValue["task_success"] === false) {
+                                        document.querySelector("#taskResult").value = `任务(id: ${outputValue["task_id"]})计算失败! \n理由: ${outputValue["result"]}`;
+                                    } else {
+                                        document.querySelector("#taskResult").value = `任务(id: ${outputValue["task_id"]})计算成功! \n离散对数结果: ${outputValue["result"]}`;
+                                    }
                                 }
                             }
+                        } else {
+                            document.querySelector("#taskResult").value = outputValue["reason"];
                         }
                     });
                 } else {
