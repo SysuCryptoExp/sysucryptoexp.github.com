@@ -197,11 +197,13 @@
                                 document.querySelector("#resultVerify").value = "验证失败";
                             }
                         } else {
-                            rsp.text().then(reason => {
-                                document.querySelector("#resultVerify").value = reason;
-                            })
+                            document.querySelector("#resultVerify").value = outputValue["reason"]
                         }
                     });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultVerify").value = reason;
+                    })
                 }
             }
             );
