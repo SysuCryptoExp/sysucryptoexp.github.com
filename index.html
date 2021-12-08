@@ -10,12 +10,26 @@ title: Home
     <p class="lead mb-4">给出实验的一些操作过程和对应的示例程序。</p>
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
       <form action="{{ '/rsa' | relative_url }}">
-        <button type="submit" class="btn btn-info btn-lg px-4 gap-3">RSA实验示例</button>
+        <button type="submit" class="btn btn-info btn-lg px-4 gap-3" style="line-height: 20px;">
+          <span>RSA实验示例</span></br>
+          <small style="font-size: 12px;">ddl: 已截止</small>
+        </button>
       </form>
     </div>
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
       <form action="{{ '/dlp' | relative_url }}">
-        <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">DLP实验示例</button>
+        <button type="submit" class="btn btn-primary btn-lg px-4 gap-3" style="line-height: 20px;">
+          <span>DLP实验示例</span></br>
+          <small style="font-size: 12px;">ddl: 十六周周三</small>
+        </button>
+      </form>
+    </div>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
+      <form action="{{ '/dsa' | relative_url }}">
+        <button type="submit" class="btn btn-primary btn-lg px-4 gap-3" style="line-height: 20px;">
+          <span>DSA实验示例</span></br>
+          <small style="font-size: 12px;">ddl: 十九周周三</small>
+        </button>
       </form>
     </div>
     <p class="mb-4">* Jekyll静态页面更新会有延迟, 刷新请使用Ctrl+F5。</p>
