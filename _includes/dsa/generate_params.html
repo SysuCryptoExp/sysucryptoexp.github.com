@@ -1,0 +1,58 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">DSA实验参数生成</h6>
+    <form>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="genParams()">生成参数</button>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <label for="resultParams" class="col-auto col-form-label">输出结果：</label>
+        </div>
+        <div class="mt-2 row">
+            <div class="col-12">
+                <textarea type="text" readonly class="form-control-plaintext" id="resultParams" value=""
+                    rows="20"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function isInDesiredForm(str) {
+        return /^\+?\d+$/.test(str);
+    }
+
+    function genParams() {
+        document.querySelector("#resultParams").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+        url = "https://api.jeza-chen.com/crypto/dsa/params";
+        fetch(url, {
+            method: 'POST',
+        }).then(rsp => {
+            if (rsp.status === 200) {
+                rsp.json().then(outputValue => {
+                    console.log(outputValue);
+                    if (outputValue["success"] === true) {
+                        document.querySelector("#resultParams").value = 
+                        `p:
+十进制: ${outputValue["p"]}
+十六进制: ${outputValue["p_hex"]}
+q:
+十进制: ${outputValue["q"]}
+十六进制: ${outputValue["q_hex"]}
+alpha:
+十进制: ${outputValue["alpha"]}
+十六进制: ${outputValue["alpha_hex"]}`;
+                    } else {
+                        document.querySelector("#resultParams").value = outputValue["reason"];
+                    }
+                });
+            } else {
+                rsp.text().then(reason => {
+                    document.querySelector("#resultParams").value = reason;
+                })
+            }
+        });
+
+    }
+</script>

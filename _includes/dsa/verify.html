@@ -1,0 +1,210 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">DSA验证签名</h6>
+    <form>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputPVerify" class="col-form-label">输入参数p：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputPTypeVerify">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputPVerify" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputQVerify" class="col-form-label">输入参数q：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputQTypeVerify">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputQVerify" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputAlphaVerify" class="col-form-label">输入参数alpha：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputAlphaTypeVerify">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputAlphaVerify" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputBetaVerify" class="col-form-label">输入公钥beta：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputBetaTypeVerify">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputBetaVerify" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputMsgVerify" class="col-form-label">输入消息msg：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputMsgTypeVerify">
+                    <option value="utf8" selected>UTF8编码</option>
+                    <option value="hex">十六进制</option>
+                    <option value="dec">十进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputMsgVerify" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputGammaVerify" class="col-form-label">输入签名之一gamma：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputGammaTypeVerify">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputGammaVerify" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputDeltaVerify" class="col-form-label">输入签名之二delta：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputDeltaTypeVerify">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputDeltaVerify" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="dsaVerify()">提交</button>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <label for="resultVerify" class="col-auto col-form-label">输出结果：</label>
+        </div>
+        <div class="mt-2 row">
+            <div class="col-12">
+                <textarea type="text" readonly class="form-control-plaintext" id="resultVerify" value=""
+                    rows="4"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function dsaVerify() {
+        let inputPValue = document.querySelector("#inputPVerify").value;
+        let inputQValue = document.querySelector("#inputQVerify").value;
+        let inputAlphaValue = document.querySelector("#inputAlphaVerify").value;
+        let inputBetaValue = document.querySelector("#inputBetaVerify").value;
+        let inputMsgValue = document.querySelector("#inputMsgVerify").value;
+        let inputGammaValue = document.querySelector("#inputGammaVerify").value;
+        let inputDeltaValue = document.querySelector("#inputDeltaVerify").value;
+
+        let inputPType = document.querySelector("#inputPTypeVerify").value;
+        let inputQType = document.querySelector("#inputQTypeVerify").value;
+        let inputAlphaType = document.querySelector("#inputAlphaTypeVerify").value;
+        let inputBetaType = document.querySelector("#inputBetaTypeVerify").value;
+        let inputMsgType = document.querySelector("#inputMsgTypeVerify").value;
+        let inputGammaType = document.querySelector("#inputGammaTypeVerify").value;
+        let inputDeltaType = document.querySelector("#inputDeltaTypeVerify").value;
+
+        if (inputPValue !== '' && inputQValue !== '' && inputAlphaValue !== ''
+            && inputBetaValue !== '' && inputMsgValue !== '' && inputGammaValue !== ''
+            && inputDeltaValue !== '') {
+            let data = {
+                "p": {
+                    "type": inputPType,
+                    "value": inputPValue
+                },
+                "q": {
+                    "type": inputQType,
+                    "value": inputQValue
+                },
+                "alpha": {
+                    "type": inputAlphaType,
+                    "value": inputAlphaValue
+                },
+                "beta": {
+                    "type": inputBetaType,
+                    "value": inputBetaValue
+                },
+                "msg": {
+                    "type": inputMsgType,
+                    "value": inputMsgValue
+                },
+                "gamma": {
+                    "type": inputGammaType,
+                    "value": inputGammaValue
+                },
+                "delta": {
+                    "type": inputDeltaType,
+                    "value": inputDeltaValue
+                }
+            };
+
+            url = "https://api.jeza-chen.com/crypto/dsa/verify";
+            document.querySelector("#resultVerify").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            verify_result = outputValue["verify_result"];
+                            if (verify_result === true) {
+                                document.querySelector("#resultVerify").value = "验证成功";
+                            } else {
+                                document.querySelector("#resultVerify").value = "验证失败";
+                            }
+                        } else {
+                            rsp.text().then(reason => {
+                                document.querySelector("#resultVerify").value = reason;
+                            })
+                        }
+                    });
+                }
+            }
+            );
+        }
+    }
+</script>

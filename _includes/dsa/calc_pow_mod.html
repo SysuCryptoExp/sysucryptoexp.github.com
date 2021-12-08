@@ -1,0 +1,96 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">计算模幂</h6>
+    <form>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputX" class="col-form-label">输入底数alpha：</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="inputX" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+            <div class="col-auto">
+                <span id="rHelpInline" class="form-text">
+                    十进制表示法
+                </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputY" class="col-form-label">输入指数a：</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="inputY" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+            <div class="col-auto">
+                <span id="rHelpInline" class="form-text">
+                    十进制表示法
+                </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputZ" class="col-form-label">输入模数p：</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="inputZ" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+            <div class="col-auto">
+                <span id="rHelpInline" class="form-text">
+                    十进制表示法
+                </span>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="calcPowMod()">提交</button>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <label for="resultPowMod" class="col-auto col-form-label">输出结果beta(十进制)：</label>
+        </div>
+        <div class="mt-2 row">
+            <div class="col-12">
+                <textarea type="text" readonly class="form-control-plaintext" id="resultPowMod" value=""
+                    rows="2"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function calcPowMod() {
+        let inputXValue = document.querySelector("#inputX").value;
+        let inputYValue = document.querySelector("#inputY").value;
+        let inputZValue = document.querySelector("#inputZ").value;
+
+        if (inputXValue !== '' && inputYValue !== '' && inputZValue !== '') {
+            let params = {
+                x: inputXValue,
+                y: inputYValue,
+                z: inputZValue,
+            };
+
+            document.querySelector("#resultPowMod").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "https://api.jeza-chen.com/crypto/pow_mod";
+            fetch(url, {
+                method: 'POST',
+                body: new URLSearchParams(params)
+            }).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            document.querySelector("#resultPowMod").value = outputValue["result_dec"];
+                        } else {
+                            document.querySelector("#resultPowMod").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultPowMod").value = reason;
+                    })
+                }
+            });
+        }
+    }
+</script>

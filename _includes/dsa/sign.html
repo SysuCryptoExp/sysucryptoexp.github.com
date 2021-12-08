@@ -1,0 +1,198 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">DSA签名</h6>
+    <form>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputPSign" class="col-form-label">输入参数p：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputPTypeSign">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputPSign" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputQSign" class="col-form-label">输入参数q：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputQTypeSign">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputQSign" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputAlphaSign" class="col-form-label">输入参数alpha：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputAlphaTypeSign">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputAlphaSign" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputASign" class="col-form-label">输入私钥a：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputATypeSign">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputASign" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputMsgSign" class="col-form-label">输入消息msg：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputMsgTypeSign">
+                    <option value="utf8" selected>UTF8编码</option>
+                    <option value="hex">十六进制</option>
+                    <option value="dec">十进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputMsgSign" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputKSign" class="col-form-label">输入随机数k：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputKTypeSign">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputKSign" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+            <div class="col-auto">
+                <span id="oaepHashHelpInline" class="form-text">
+                    * 可选，按理说k是程序内部随机选取的, 为了便于验证签名结果这里允许固定k
+                </span>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="dsaSign()">提交</button>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <label for="resultSign" class="col-auto col-form-label">输出结果：</label>
+        </div>
+        <div class="mt-2 row">
+            <div class="col-12">
+                <textarea type="text" readonly class="form-control-plaintext" id="resultSign" value=""
+                    rows="4"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    function dsaSign() {
+        let inputPValue = document.querySelector("#inputPSign").value;
+        let inputQValue = document.querySelector("#inputQSign").value;
+        let inputAlphaValue = document.querySelector("#inputAlphaSign").value;
+        let inputAValue = document.querySelector("#inputASign").value;
+        let inputMsgValue = document.querySelector("#inputMsgSign").value;
+        let inputKValue = document.querySelector("#inputKSign").value;
+
+        let inputPType = document.querySelector("#inputPTypeSign").value;
+        let inputQType = document.querySelector("#inputQTypeSign").value;
+        let inputAlphaType = document.querySelector("#inputAlphaTypeSign").value;
+        let inputAType = document.querySelector("#inputATypeSign").value;
+        let inputMsgType = document.querySelector("#inputMsgTypeSign").value;
+        let inputKType = document.querySelector("#inputKTypeSign").value;
+
+        if (inputPValue !== '' && inputQValue !== '' && inputAlphaValue !== '' && inputAValue !== '' && inputMsgValue !== '') {
+            let data = {
+                "p": {
+                    "type": inputPType,
+                    "value": inputPValue
+                },
+                "q": {
+                    "type": inputQType,
+                    "value": inputQValue
+                },
+                "alpha": {
+                    "type": inputAlphaType,
+                    "value": inputAlphaValue
+                },
+                "a": {
+                    "type": inputAType,
+                    "value": inputAValue
+                },
+                "msg": {
+                    "type": inputMsgType,
+                    "value": inputMsgValue
+                },   
+            };
+
+            if (inputKValue !== '') {
+                data["k"] = {
+                    "type": inputKType,
+                    "value": inputKValue
+                };
+            }
+
+            url = "https://api.jeza-chen.com/crypto/dsa/sign";
+            document.querySelector("#resultSign").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            result_str = `gamma:
+十进制: ${outputValue["gamma"]}
+十六进制: ${outputValue["gamma_hex"]}
+delta:
+十进制: ${outputValue["delta"]}
+十六进制: ${outputValue["delta_hex"]}`
+                            document.querySelector("#resultSign").value = result_str;
+                        } else {
+                            document.querySelector("#resultSign").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultSign").value = reason;
+                    })
+                }
+            });
+        }
+    }
+</script>
