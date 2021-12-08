@@ -22,7 +22,7 @@
 
 - 从 `{1, ..., q-1}` 选择随机整数 `k`
 
-- 计算 `gamma = (a ^ k mod p) mod q`，当出现 `gamma = 0` 状况时重新选择随机数 `k`
+- 计算 `gamma = (alpha ^ k mod p) mod q`，当出现 `gamma = 0` 状况时重新选择随机数 `k`
 
 - 计算 `delta = (SHA256(msg) + a * gamma) * k ^ (-1) mod q`，当出现 `delta = 0` 状况时重新选择随机数 `k`
 
