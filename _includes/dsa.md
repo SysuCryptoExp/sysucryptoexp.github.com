@@ -43,7 +43,7 @@
 
 - 计算 `u2 = gamma * w mod q`
 
-- 计算 `v = ((g ^ u1) * (y ^ u2) mod p) mod q`
+- 计算 `v = ((alpha ^ u1) * (beta ^ u2) mod p) mod q`
 
 只有在 `v = gamma` 时代表签名是有效的。
 
