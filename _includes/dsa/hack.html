@@ -1,0 +1,224 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">DSA私钥破解(固定k的情况下)</h6>
+    <form>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputQHack" class="col-form-label">输入参数q：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputQTypeHack">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputQHack" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="alert alert-primary mt-2 md-0" role="alert">
+            输入第一个消息及其签名, 请务必保证两个消息签名所用的k都是一样的
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label for="inputMsg1Hack" class="col-form-label">输入消息m1：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputMsg1TypeHack">
+                    <option value="utf8" selected>UTF8编码</option>
+                    <option value="hex">十六进制</option>
+                    <option value="dec">十进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputMsg1Hack" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputGamma1Hack" class="col-form-label">输入签名之一gamma1：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputGamma1TypeHack">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputGamma1Hack" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputDelta1Hack" class="col-form-label">输入签名之二delta1：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputDelta1TypeHack">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputDelta1Hack" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+
+        <div class="alert alert-primary mt-2 md-0" role="alert">
+            输入第二个消息及其签名, 请务必保证两个消息签名所用的k都是一样的
+        </div>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <label for="inputMsg2Hack" class="col-form-label">输入消息m2：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputMsg2TypeHack">
+                    <option value="utf8" selected>UTF8编码</option>
+                    <option value="hex">十六进制</option>
+                    <option value="dec">十进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputMsg2Hack" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputGamma2Hack" class="col-form-label">输入签名之一gamma2：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputGamma2TypeHack">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputGamma2Hack" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputDelta2Hack" class="col-form-label">输入签名之二delta2：</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select form-select-md col-auto" aria-label=".form-select-lg example"
+                    id="inputDelta2TypeHack">
+                    <option value="dec" selected>十进制</option>
+                    <option value="hex">十六进制</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" id="inputDelta2Hack" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+        </div>
+
+        <div class="mt-2 row g-3">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="dsaHack()">提交</button>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <label for="resultHack" class="col-auto col-form-label">输出结果：</label>
+        </div>
+        <div class="mt-2 row">
+            <div class="col-12">
+                <textarea type="text" readonly class="form-control-plaintext" id="resultHack" value=""
+                    rows="8"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function dsaHack() {
+        let inputQValue = document.querySelector("#inputQHack").value;
+
+        let inputMsg1Value = document.querySelector("#inputMsg1Hack").value;
+        let inputGamma1Value = document.querySelector("#inputGamma1Hack").value;
+        let inputDelta1Value = document.querySelector("#inputDelta1Hack").value;
+
+        let inputMsg2Value = document.querySelector("#inputMsg2Hack").value;
+        let inputGamma2Value = document.querySelector("#inputGamma2Hack").value;
+        let inputDelta2Value = document.querySelector("#inputDelta2Hack").value;
+
+        let inputQType = document.querySelector("#inputQTypeHack").value;
+
+        let inputMsg1Type = document.querySelector("#inputMsg1TypeHack").value;
+        let inputGamma1Type = document.querySelector("#inputGamma1TypeHack").value;
+        let inputDelta1Type = document.querySelector("#inputDelta1TypeHack").value;
+
+        let inputMsg2Type = document.querySelector("#inputMsg2TypeHack").value;
+        let inputGamma2Type = document.querySelector("#inputGamma2TypeHack").value;
+        let inputDelta2Type = document.querySelector("#inputDelta2TypeHack").value;
+
+        if (inputQValue !== '' && inputMsg1Value !== '' && inputGamma1Value !== '' && inputDelta1Value !== ''
+            && inputMsg2Value !== '' && inputGamma2Value !== '' && inputDelta2Value !== '') {
+            let data = {
+                "q": {
+                    "type": inputQType,
+                    "value": inputQValue
+                },
+                "msg1": {
+                    "type": inputMsg1Type,
+                    "value": inputMsg1Value
+                },
+                "gamma1": {
+                    "type": inputGamma1Type,
+                    "value": inputGamma1Value
+                },
+                "delta1": {
+                    "type": inputDelta1Type,
+                    "value": inputDelta1Value
+                },
+                "msg2": {
+                    "type": inputMsg2Type,
+                    "value": inputMsg2Value
+                },
+                "gamma2": {
+                    "type": inputGamma2Type,
+                    "value": inputGamma2Value
+                },
+                "delta2": {
+                    "type": inputDelta2Type,
+                    "value": inputDelta2Value
+                }
+            };
+
+            url = "https://api.jeza-chen.com/crypto/dsa/hack_same_k";
+            document.querySelector("#resultHack").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            k = outputValue["k"];
+                            k_hex = outputValue["k_hex"];
+                            private_key = outputValue["private_key"];
+                            private_key_hex = outputValue["private_key_hex"];
+                            document.querySelector("#resultHack").value = `破解成功!\nk:\n十进制: ${k};\n十六进制: ${k_hex}\n\n私钥a:\n十进制: ${private_key};\n十六进制: ${private_key_hex}`
+
+                        } else {
+                            document.querySelector("#resultHack").value = outputValue["reason"]
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultHack").value = reason;
+                    })
+                }
+            }
+            );
+        }
+    }
+</script>
