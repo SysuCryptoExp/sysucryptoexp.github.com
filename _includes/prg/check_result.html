@@ -1,0 +1,86 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">验证实验结果</h6>
+    <form>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputSeed" class="col-form-label">输入种子(学号)：</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="inputSeed" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+            <div class="col-auto">
+                <span id="rHelpInline" class="form-text">
+                    十进制表示法
+                </span>
+            </div>
+        </div>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputResult" class="col-form-label">输入程序输出结果：</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="inputResult" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+            <div class="col-auto">
+                <span id="rHelpInline" class="form-text">
+                    512比特的二进制字符串
+                </span>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="checkResult()">提交</button>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <label for="resultVerify" class="col-auto col-form-label">验证结果：</label>
+        </div>
+        <div class="mt-2 row">
+            <div class="col-12">
+                <textarea type="text" readonly class="form-control-plaintext" id="resultVerify" value=""
+                    rows="1"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function checkResult() {
+        let inputSeedValue = document.querySelector("#inputSeed").value.trim();
+        let inputResultValue = document.querySelector("#inputResult").value.trim();
+
+        if (inputSeedValue !== '' && inputResultValue !== '') {
+            let params = {
+                seed: inputSeedValue,
+                bits: inputResultValue
+            };
+
+            document.querySelector("#resultVerify").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "https://api.jeza-chen.com/crypto/prg/check";
+            fetch(url, {
+                method: 'POST',
+                body: new URLSearchParams(params)
+            }).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            if (outputValue["matched"] === true) {
+                                document.querySelector("#resultVerify").value = "结果正确";
+                            } else {
+                                document.querySelector("#resultVerify").value = "结果错误";
+                            }
+                            
+                        } else {
+                            document.querySelector("#resultVerify").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultVerify").value = reason;
+                    })
+                }
+            });
+        }
+    }
+</script>

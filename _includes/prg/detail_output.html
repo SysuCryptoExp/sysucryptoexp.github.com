@@ -1,0 +1,72 @@
+<div class="my-3 p-3 bg-white rounded box-shadow">
+    <h6 class="border-bottom border-gray pb-2 mb-0">输出PRG前64轮的中间变量</h6>
+    <form>
+        <div class="row g-3 align-items-center mt-2">
+            <div class="col-auto">
+                <label for="inputSeed2" class="col-form-label">输入种子(学号)：</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="inputSeed2" class="form-control" aria-describedby="passwordHelpInline">
+            </div>
+            <div class="col-auto">
+                <span id="rHelpInline" class="form-text">
+                    十进制表示法
+                </span>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <div class="col-auto">
+                <button type="button" class="btn btn-primary" onclick="outputDetail()">提交</button>
+            </div>
+        </div>
+        <div class="mt-2 row g-3">
+            <label for="resultDetails" class="col-auto col-form-label">输出结果：</label>
+        </div>
+        <div class="mt-2 row">
+            <div class="col-12">
+                <textarea type="text" readonly class="form-control-plaintext" id="resultDetails" value=""
+                    rows="6"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function outputDetail() {
+        let inputSeedValue = document.querySelector("#inputSeed2").value.trim();
+
+        if (inputSeedValue !== '') {
+            let params = {
+                seed: inputSeedValue,
+            };
+
+            document.querySelector("#resultDetails").value = "提交到服务器中...(如果等待时间过久，请重新提交)";
+            url = "https://api.jeza-chen.com/crypto/prg/detailed_output_prev_64bits";
+            fetch(url, {
+                method: 'POST',
+                body: new URLSearchParams(params)
+            }).then(rsp => {
+                if (rsp.status === 200) {
+                    rsp.json().then(outputValue => {
+                        console.log(outputValue);
+                        if (outputValue["success"] === true) {
+                            console.log(outputValue["detailed_output"]);
+                            output_str = `----------------------------------\ni: 0\nsi: ${outputValue["detailed_output"][0][1]}\n`;
+                            for (let i = 1; i <= 64; ++i) {
+                                output_str += `----------------------------------\ni: ${outputValue["detailed_output"][i][0]}\nsi: ${outputValue["detailed_output"][i][1]}\nzi: ${outputValue["detailed_output"][i][2]}\n`;
+                            }
+                            document.querySelector("#resultDetails").value = output_str;
+                            
+                        } else {
+                            document.querySelector("#resultDetails").value = outputValue["reason"];
+                        }
+                    });
+                } else {
+                    rsp.text().then(reason => {
+                        document.querySelector("#resultDetails").value = reason;
+                    })
+                }
+            });
+        }
+    }
+</script>
